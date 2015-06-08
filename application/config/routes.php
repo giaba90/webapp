@@ -40,6 +40,8 @@
 
 $route['default_controller'] = "welcome";
 //$route['home'] = 'welcome';
+$route['primogiorno'] = 'welcome/single/primogiorno';
+$route['secondogiorno'] = 'welcome/single/secondogiorno';
 $route['register/(:any)'] = 'welcome/register/$1';
 $route['get_users/(:any)'] = 'welcome/get_users/$1';
 $route['estrai/(:any)'] = 'welcome/raffle_winner/$1';

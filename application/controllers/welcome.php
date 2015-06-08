@@ -13,8 +13,9 @@ class Welcome extends CI_Controller {
 
 	public function index()
 	{
-    //    $data['users'] = $this->user_model->get_all_users('primogiorno');
+        $this->load->view('header');
         $this->load->view('welcome_message');
+        $this->load->view('footer');
 	}
 
     public function register($table){
@@ -28,24 +29,24 @@ class Welcome extends CI_Controller {
             //insert in the table
             $data_input = array(
                 "matricola" => $this->input->post('matricola'),
-                "nome" =>  $this->input->post('nome'),
-                "cognome" => $this->input->post('cognome'),
+                "nome" =>  mb_strtolower($this->input->post('nome'), 'UTF-8'),
+                "cognome" => mb_strtolower($this->input->post('cognome'), 'UTF-8'),
                 "email" => $this->input->post('email'),
                 "crediti" => (bool) $this->input->post('crediti')
             ); //return true if it's all ok
             $success = $this->user_model->register($data_input,$table);
             if ($success) {
               $this->session->set_flashdata('message', ' Utente inserito con successo');
-              redirect('/', 'refresh');
+              redirect('/'. $table , 'refresh');
             } else {
                 //If there was an error when you tried to update post
                 //set the flash data error message if there is one
                 $this->session->set_flashdata('message', 'Errore inserimento utente');
-                redirect('/', 'refresh');
+                redirect('/'. $table, 'refresh');
             }
         } else { // validation has not been passed, refresh the view
             $this->session->set_flashdata('message', 'Errore nella validazione del form');
-            redirect('/', 'refresh');
+            redirect('/'. $table, 'refresh');
         }
     }
 
@@ -57,9 +58,17 @@ class Welcome extends CI_Controller {
 
     public function get_users($table){
         $data['table'] = $table;
+        $data['partecipanti'] = $this->user_model->count($table);
         $data['users'] = $this->user_model->get_all_users($table);
         $this->load->view('user',$data);
   }
+
+    public function single($view){
+        $data['data'] = $view;
+        $this->load->view('header');
+        $this->load->view('vista',$data);
+        $this->load->view('footer');
+    }
 }
 
 /* End of file welcome.php */

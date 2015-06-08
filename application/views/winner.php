@@ -4,6 +4,7 @@
     <table class="table table-condensed">
         <thead>
         <tr>
+            <th>Matricola</th>
             <th>Nome</th>
             <th>Cognome</th>
         </tr>
@@ -11,6 +12,7 @@
         <tbody>
         <?php foreach($list as $row) : ?>
             <tr>
+                <td><?php echo $row['matricola']; ?></td>
                 <td><?php echo $row['nome']; ?></td>
                 <td><?php echo $row['cognome']; ?></td>
             </tr>

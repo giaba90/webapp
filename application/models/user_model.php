@@ -29,9 +29,13 @@ class User_model extends CI_Model
     }
 
     public function raffle_winner($table){
-        $this->db->select('*')->order_by('rand()')->limit(1);
+        $this->db->select('*')->order_by('rand()')->limit(3);
         $query = $this->db->get($table);
         return $query->result_array();
 
+    }
+
+    public function count($table){
+        return $this->db->count_all($table);
     }
 }
